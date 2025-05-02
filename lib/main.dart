@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Shopazon',
+      title: 'Mini Shopping App',
       theme: ThemeData(
         primarySwatch: Colors.orange,
         appBarTheme: const AppBarTheme(
