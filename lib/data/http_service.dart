@@ -6,7 +6,7 @@ class HttpService {
 
   static Dio get dio {
     _dio.options = BaseOptions(
-      baseUrl: 'https://fakestoreapi.com/',
+      baseUrl: 'https://testseries-cf9d5dc153b9.herokuapp.com/',
       connectTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(seconds: 30),
     );

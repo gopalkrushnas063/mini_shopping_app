@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:mini_shopping_app/screens/product_detail_screen.dart';
+import 'package:mini_shopping_app/widgets/product_card_shimmer.dart';
+import 'package:mini_shopping_app/widgets/shimmer_effect.dart';
 import '../providers/providers.dart';
 import '../widgets/category_chip.dart';
 import '../widgets/product_card.dart';
@@ -177,7 +179,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 margin: const EdgeInsets.only(top: 10),
                 child: categoriesAsync.when(
                   loading:
-                      () => const Center(child: CircularProgressIndicator()),
+                      () => SizedBox(
+                        height: 50,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 5,
+                          itemBuilder: (context, index) {
+                            return const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 4),
+                              child: ShimmerEffect.rectangular(
+                                height: 30,
+                                width: 80,
+                                shapeBorder: StadiumBorder(),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                   error: (error, stack) => Center(child: Text('Error: $error')),
                   data: (categories) {
                     return ListView.builder(
@@ -206,7 +224,22 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   .watch(filteredProductsProvider)
                   .when(
                     loading:
-                        () => const Center(child: CircularProgressIndicator()),
+                        () => GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          padding: const EdgeInsets.all(8),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: 0.75,
+                                crossAxisSpacing: 8,
+                                mainAxisSpacing: 8,
+                              ),
+                          itemCount: 6,
+                          itemBuilder: (context, index) {
+                            return const ProductCardShimmer();
+                          },
+                        ),
                     error:
                         (error, stack) => Center(child: Text('Error: $error')),
                     data: (products) {
